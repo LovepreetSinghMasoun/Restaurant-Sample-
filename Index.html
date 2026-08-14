@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nori & Lime — Modern Fusion Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12201E;
+    --ink-2:#1B2C29;
+    --lime:#D6E24B;
+    --coral:#E8543E;
+    --paper:#F2F0E6;
+    --paper-dim:#DAD8CC;
+    --line: rgba(242,240,230,0.16);
+    --display: 'Fraunces', serif;
+    --body: 'Work Sans', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  ::selection{background:var(--lime); color:var(--ink);}
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--lime);
+    outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  .wrap{max-width:1180px; margin:0 auto; padding:0 32px;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(18,32,30,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:1180px; margin:0 auto; padding:18px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:var(--display); font-weight:600; font-size:1.35rem;
+    letter-spacing:0.01em;
+  }
+  .brand em{color:var(--lime); font-style:normal;}
+  .navlinks{display:flex; gap:32px; font-size:0.92rem; letter-spacing:0.02em;}
+  .navlinks a{opacity:0.85; transition:opacity 0.2s, color 0.2s; position:relative;}
+  .navlinks a:hover{opacity:1; color:var(--lime);}
+  .navcta{
+    background:var(--lime); color:var(--ink); padding:9px 18px;
+    border-radius:2px; font-weight:600; font-size:0.88rem;
+    transition:transform 0.2s ease, background 0.2s;
+  }
+  .navcta:hover{transform:translateY(-2px); background:#e4f05f;}
+  .navtoggle{display:none; background:none; border:none; color:var(--paper); font-size:1.6rem; cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex; align-items:center;
+    padding-top:90px;
+    overflow:hidden;
+  }
+  .hero-collide{
+    position:absolute; inset:0; z-index:0;
+    opacity:0.9;
+  }
+  .hero .wrap{position:relative; z-index:2; width:100%;}
+  .eyebrow{
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--lime); margin-bottom:22px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--lime); display:inline-block;}
+  .hero h1{
+    font-family:var(--display); font-weight:400; font-size:clamp(3rem, 8vw, 6.4rem);
+    line-height:0.98; letter-spacing:-0.01em; max-width:900px;
+  }
+  .hero h1 i{font-style:italic; font-weight:500; color:var(--coral);}
+  .hero-sub{
+    margin-top:28px; max-width:480px; font-size:1.08rem; color:var(--paper-dim);
+  }
+  .hero-actions{display:flex; gap:16px; margin-top:40px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 26px; border-radius:2px; font-weight:600; font-size:0.95rem;
+    border:1px solid transparent; cursor:pointer; transition:all 0.25s ease;
+  }
+  .btn-primary{background:var(--coral); color:var(--paper);}
+  .btn-primary:hover{background:#f2604a; transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--line); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--lime); color:var(--lime);}
+
+  .hero-mark{
+    position:absolute; right:-40px; top:50%; transform:translateY(-50%);
+    width:min(46vw, 560px); opacity:0.95; z-index:1;
+  }
+
+  .scrolldown{
+    position:absolute; bottom:34px; left:32px; z-index:2;
+    font-family:var(--mono); font-size:0.72rem; color:var(--paper-dim);
+    display:flex; align-items:center; gap:10px;
+  }
+  .scrolldown .stem{width:1px; height:34px; background:var(--paper-dim); position:relative; overflow:hidden;}
+  .scrolldown .stem::after{
+    content:''; position:absolute; top:-100%; left:0; width:100%; height:100%;
+    background:var(--lime); animation:drip 1.8s ease-in-out infinite;
+  }
+  @keyframes drip{ 0%{top:-100%;} 50%{top:0;} 100%{top:100%;} }
+
+  /* ---------- SECTION LABELS ---------- */
+  .section{padding:120px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    gap:24px; margin-bottom:56px; flex-wrap:wrap;
+    border-bottom:1px solid var(--line); padding-bottom:26px;
+  }
+  .section-head .tag{
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--lime);
+  }
+  .section-head h2{
+    font-family:var(--display); font-weight:400; font-size:clamp(2.1rem,4vw,3.2rem);
+  }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy{display:grid; grid-template-columns:1.1fr 0.9fr; gap:70px; align-items:start;}
+  .philosophy p{font-size:1.12rem; color:var(--paper-dim); margin-bottom:20px; max-width:52ch;}
+  .philosophy p:first-of-type{color:var(--paper); font-size:1.3rem; font-family:var(--display); line-height:1.4;}
+  .origin-split{
+    display:flex; flex-direction:column; gap:18px;
+    font-family:var(--mono); font-size:0.85rem;
+  }
+  .origin-row{
+    display:grid; grid-template-columns:90px 1fr; gap:16px; align-items:center;
+    padding:16px 0; border-top:1px solid var(--line);
+  }
+  .origin-row:last-child{border-bottom:1px solid var(--line);}
+  .origin-row .pct{color:var(--lime); font-size:1.6rem; font-family:var(--display); font-style:italic;}
+  .origin-row .bar{height:4px; background:var(--paper-dim); opacity:0.25; position:relative; border-radius:2px;}
+  .origin-row .bar span{position:absolute; left:0; top:0; height:100%; background:var(--coral); border-radius:2px;}
+  .origin-row .label{grid-column:1 / -1; color:var(--paper-dim); margin-top:-8px;}
+
+  /* ---------- MENU — ticket motif ---------- */
+  .menu-ticket{
+    background:var(--paper); color:var(--ink);
+    border-radius:3px; padding:56px clamp(24px,5vw,64px);
+    position:relative;
+    box-shadow:0 40px 80px -30px rgba(0,0,0,0.6);
+  }
+  .menu-ticket::before, .menu-ticket::after{
+    content:''; position:absolute; left:0; right:0; height:22px;
+    background-image:radial-gradient(circle at 14px 50%, var(--ink) 9px, transparent 9.5px);
+    background-size:28px 22px; background-repeat:repeat-x;
+  }
+  .menu-ticket::before{top:-11px;}
+  .menu-ticket::after{bottom:-11px; transform:rotate(180deg);}
+  .ticket-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase;
+    border-bottom:2px dashed var(--ink); padding-bottom:20px; margin-bottom:8px;
+    opacity:0.75;
+  }
+  .menu-cat{margin-top:44px;}
+  .menu-cat h3{
+    font-family:var(--display); font-style:italic; font-weight:500; font-size:1.7rem; margin-bottom:22px;
+  }
+  .menu-item{
+    display:grid; grid-template-columns:auto 1fr auto; align-items:baseline; gap:8px;
+    padding:14px 0; border-bottom:1px dotted rgba(18,32,30,0.25);
+  }
+  .menu-item .name{font-weight:600; font-size:1.03rem;}
+  .menu-item .leader{border-bottom:1px dotted rgba(18,32,30,0.35); position:relative; top:-4px;}
+  .menu-item .price{font-family:var(--mono); font-weight:500;}
+  .menu-item .desc{
+    grid-column:1 / -1; font-size:0.88rem; color:#4b564f; max-width:60ch; margin-top:-4px;
+  }
+  .menu-item .origin-tag{
+    font-family:var(--mono); font-size:0.65rem; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--coral); margin-right:8px;
+  }
+
+  /* ---------- GALLERY (css-drawn ingredient marks, no photos) ---------- */
+  .ingredient-row{
+    display:grid; grid-template-columns:repeat(auto-fit, minmax(150px,1fr)); gap:1px;
+    background:var(--line); border:1px solid var(--line); margin-top:80px;
+  }
+  .ing-cell{
+    background:var(--ink); padding:34px 20px; text-align:center;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+    transition:background 0.3s ease;
+  }
+  .ing-cell:hover{background:var(--ink-2);}
+  .ing-cell svg{width:40px; height:40px;}
+  .ing-cell span{font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--paper-dim);}
+
+  /* ---------- HOURS + LOCATION ---------- */
+  .info-grid{display:grid; grid-template-columns:1fr 1fr; gap:70px;}
+  .hours-list{font-family:var(--mono); font-size:0.95rem;}
+  .hours-row{
+    display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid var(--line);
+  }
+  .hours-row .day{color:var(--paper-dim);}
+  .hours-row.today{color:var(--lime);}
+  .addr-block p{margin-bottom:8px; color:var(--paper-dim);}
+  .addr-block .big{font-family:var(--display); font-size:1.5rem; color:var(--paper); margin-bottom:14px;}
+
+  /* ---------- RESERVE ---------- */
+  .reserve{
+    background:var(--ink-2); border-radius:4px; padding:clamp(32px,6vw,64px);
+    display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px;
+  }
+  .reserve h2{font-family:var(--display); font-size:clamp(2rem,3.6vw,2.8rem); line-height:1.15; margin-bottom:18px;}
+  .reserve p{color:var(--paper-dim); max-width:38ch;}
+  form{display:grid; gap:18px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  label{font-family:var(--mono); font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--paper-dim); display:block; margin-bottom:8px;}
+  input, select, textarea{
+    width:100%; background:transparent; border:none; border-bottom:1px solid var(--line);
+    color:var(--paper); font-family:var(--body); font-size:1rem; padding:10px 2px;
+    transition:border-color 0.2s;
+  }
+  input::placeholder, textarea::placeholder{color:rgba(242,240,230,0.35);}
+  input:focus, select:focus, textarea:focus{border-color:var(--lime); outline:none;}
+  select option{background:var(--ink-2);}
+  textarea{resize:vertical; min-height:70px;}
+  .form-submit{
+    margin-top:8px; background:var(--lime); color:var(--ink); border:none; padding:16px;
+    font-weight:600; font-size:0.95rem; border-radius:2px; cursor:pointer; transition:background 0.2s, transform 0.2s;
+  }
+  .form-submit:hover{background:#e4f05f; transform:translateY(-2px);}
+  .form-note{font-family:var(--mono); font-size:0.78rem; color:var(--paper-dim); margin-top:4px; min-height:1.2em;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line); padding:56px 0 40px;}
+  .footer-grid{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px;}
+  .footer-brand{font-family:var(--display); font-size:1.6rem;}
+  .footer-links{display:flex; gap:26px; font-size:0.88rem; color:var(--paper-dim);}
+  .footer-links a:hover{color:var(--lime);}
+  .fine{font-family:var(--mono); font-size:0.72rem; color:var(--paper-dim); margin-top:34px; opacity:0.6;}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity 0.7s ease, transform 0.7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .philosophy, .info-grid, .reserve{grid-template-columns:1fr;}
+    .reserve{gap:34px;}
+    .hero-mark{display:none;}
+    .navlinks{display:none;}
+    .navtoggle{display:block;}
+  }
+  @media (max-width:560px){
+    .section{padding:80px 0;}
+    .form-row{grid-template-columns:1fr;}
+    nav{padding:16px 20px;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#top" class="brand">Nori <em>&</em> Lime</a>
+    <div class="navlinks">
+      <a href="#philosophy">Philosophy</a>
+      <a href="#menu">Menu</a>
+      <a href="#visit">Visit</a>
+      <a href="#reserve" class="navcta">Reserve</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero" id="top">
+  <svg class="hero-mark" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="250" cy="250" r="200" stroke="#D6E24B" stroke-width="1" opacity="0.35"/>
+    <path d="M120 250c0-72 58-130 130-130" stroke="#E8543E" stroke-width="2" stroke-linecap="round"/>
+    <path d="M380 250c0 72-58 130-130 130" stroke="#D6E24B" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="120" cy="250" r="6" fill="#E8543E"/>
+    <circle cx="380" cy="250" r="6" fill="#D6E24B"/>
+    <g opacity="0.5">
+      <line x1="250" y1="60" x2="250" y2="440" stroke="#F2F0E6" stroke-width="0.5" stroke-dasharray="2 6"/>
+    </g>
+  </svg>
+  <div class="wrap">
+    <div class="eyebrow">Charlottetown · Est. 2024</div>
+    <h1>Two kitchens.<br>One <i>collision.</i></h1>
+    <p class="hero-sub">Nori & Lime pairs the precision of Japanese technique with the heat and citrus of Latin American cooking — one menu, built at the seam between them.</p>
+    <div class="hero-actions">
+      <a href="#reserve" class="btn btn-primary">Reserve a table</a>
+      <a href="#menu" class="btn btn-ghost">View the menu</a>
+    </div>
+  </div>
+  <div class="scrolldown"><span>Scroll</span><div class="stem"></div></div>
+</section>
+
+<section class="section" id="philosophy">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>The seam, not the blend</h2>
+      <span class="tag">Philosophy</span>
+    </div>
+    <div class="philosophy reveal">
+      <div>
+        <p>We don't smooth two cuisines into one. We let you taste the exact point where miso meets aji amarillo.</p>
+        <p>Every dish keeps its two halves legible — a technique from one tradition applied to an ingredient from the other, plated so you can taste the handoff, not just the result.</p>
+        <p>Our chefs trained across both kitchens before opening this one, and the menu changes with what's in season on either coast.</p>
+      </div>
+      <div class="origin-split">
+        <div class="origin-row">
+          <div class="pct">52%</div>
+          <div class="bar"><span style="width:52%"></span></div>
+          <div class="label">Techniques rooted in Japanese kitchens — knife work, dashi, fermentation.</div>
+        </div>
+        <div class="origin-row">
+          <div class="pct">48%</div>
+          <div class="bar"><span style="width:48%"></span></div>
+          <div class="label">Ingredients and heat drawn from Latin American markets — chile, citrus, char.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="menu">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Tonight's order slip</h2>
+      <span class="tag">Menu</span>
+    </div>
+    <div class="menu-ticket reveal">
+      <div class="ticket-head">
+        <span>Nori & Lime — Kitchen Ticket</span>
+        <span>No. 0148</span>
+      </div>
+
+      <div class="menu-cat">
+        <h3>To start</h3>
+        <div class="menu-item">
+          <span class="name">Hamachi Tostada</span><span class="leader"></span><span class="price">$16</span>
+          <p class="desc"><span class="origin-tag">JP · MX</span>Yellowtail, crispy masa, yuzu-leche de tigre, chili threads.</p>
+        </div>
+        <div class="menu-item">
+          <span class="name">Charred Corn Chawanmushi</span><span class="leader"></span><span class="price">$13</span>
+          <p class="desc"><span class="origin-tag">JP · PE</span>Silken egg custard, elote butter, aji amarillo oil.</p>
+        </div>
+      </div>
+
+      <div class="menu-cat">
+        <h3>Mains</h3>
+        <div class="menu-item">
+          <span class="name">Miso Short Rib Barbacoa</span><span class="leader"></span><span class="price">$34</span>
+          <p class="desc"><span class="origin-tag">JP · MX</span>48-hour braise, banana leaf, pickled daikon slaw.</p>
+        </div>
+        <div class="menu-item">
+          <span class="name">Nikkei Sea Bass</span><span class="leader"></span><span class="price">$38</span>
+          <p class="desc"><span class="origin-tag">PE · JP</span>Binchotan-grilled, rocoto butter, shiso-cilantro sauce.</p>
+        </div>
+        <div class="menu-item">
+          <span class="name">Black Garlic Mole Ramen</span><span class="leader"></span><span class="price">$24</span>
+          <p class="desc"><span class="origin-tag">MX · JP</span>Tare built from a 20-ingredient mole, chashu, charred scallion.</p>
+        </div>
+      </div>
+
+      <div class="menu-cat">
+        <h3>To finish</h3>
+        <div class="menu-item">
+          <span class="name">Matcha Tres Leches</span><span class="leader"></span><span class="price">$11</span>
+          <p class="desc"><span class="origin-tag">JP · MX</span>Ceremonial matcha soak, whipped cream, toasted rice crunch.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="ingredient-row reveal">
+      <div class="ing-cell">
+        <svg viewBox="0 0 40 40" stroke="#D6E24B" stroke-width="1.5" fill="none"><circle cx="20" cy="20" r="14"/><path d="M20 6v28M6 20h28" stroke-width="0.7" opacity="0.5"/></svg>
+        <span>Yuzu</span>
+      </div>
+      <div class="ing-cell">
+        <svg viewBox="0 0 40 40" stroke="#E8543E" stroke-width="1.5" fill="none"><path d="M20 5c8 6 12 14 8 24-3 7-13 7-16 0-4-10 0-18 8-24z"/></svg>
+        <span>Aji Amarillo</span>
+      </div>
+      <div class="ing-cell">
+        <svg viewBox="0 0 40 40" stroke="#D6E24B" stroke-width="1.5" fill="none"><rect x="8" y="8" width="24" height="24" rx="2"/><path d="M8 20h24M20 8v24" stroke-width="0.7" opacity="0.5"/></svg>
+        <span>Miso</span>
+      </div>
+      <div class="ing-cell">
+        <svg viewBox="0 0 40 40" stroke="#E8543E" stroke-width="1.5" fill="none"><path d="M6 26c4-14 24-14 28 0" /><circle cx="20" cy="14" r="3"/></svg>
+        <span>Cilantro</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="visit">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Find the seam</h2>
+      <span class="tag">Visit</span>
+    </div>
+    <div class="info-grid reveal">
+      <div class="addr-block">
+        <p class="big">145 Sydney Street<br>Charlottetown, PE</p>
+        <p>Street parking after 6pm. Two blocks from the waterfront.</p>
+        <p>hello@noriandlime.ca &nbsp;·&nbsp; (902) 555-0148</p>
+      </div>
+      <div class="hours-list">
+        <div class="hours-row"><span class="day">Monday</span><span>Closed</span></div>
+        <div class="hours-row"><span class="day">Tuesday – Thursday</span><span>5:00pm – 10:00pm</span></div>
+        <div class="hours-row today"><span class="day">Friday – Saturday</span><span>5:00pm – 11:00pm</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span>5:00pm – 9:00pm</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="reserve">
+  <div class="wrap">
+    <div class="reserve reveal">
+      <div>
+        <h2>Book the pass.</h2>
+        <p>Tables held for 15 minutes past reservation time. For parties of 7 or more, call us directly.</p>
+      </div>
+      <form id="reserveForm">
+        <div class="form-row">
+          <div>
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Full name" required>
+          </div>
+          <div>
+            <label for="phone">Phone</label>
+            <input id="phone" type="tel" placeholder="(902) 555-0100" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="date">Date</label>
+            <input id="date" type="date" required>
+          </div>
+          <div>
+            <label for="time">Time</label>
+            <input id="time" type="time" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div>
+            <label for="party">Party size</label>
+            <select id="party" required>
+              <option value="">Select</option>
+              <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+            </select>
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="you@email.com" required>
+          </div>
+        </div>
+        <div>
+          <label for="notes">Notes (optional)</label>
+          <textarea id="notes" placeholder="Allergies, occasion, seating preference..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Confirm reservation</button>
+        <div class="form-note" id="formNote"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">Nori & Lime</div>
+      <div class="footer-links">
+        <a href="#menu">Menu</a>
+        <a href="#visit">Visit</a>
+        <a href="#reserve">Reserve</a>
+        <a href="#top">Back to top</a>
+      </div>
+    </div>
+    <div class="fine">© 2026 Nori & Lime. Demo site built for portfolio purposes.</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Reservation form (demo — no backend)
+  const form = document.getElementById('reserveForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const date = document.getElementById('date').value;
+    const time = document.getElementById('time').value;
+    if(!name || !date || !time){
+      note.textContent = 'Please fill in your name, date, and time.';
+      note.style.color = '#E8543E';
+      return;
+    }
+    note.textContent = `Thanks, ${name.split(' ')[0]} — table requested for ${date} at ${time}. We'll confirm by email shortly.`;
+    note.style.color = '#D6E24B';
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
