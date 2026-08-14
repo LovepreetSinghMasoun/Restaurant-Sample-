@@ -2,8 +2,7 @@
 
 A single-page, client-style restaurant website built as a portfolio piece. Concept: a modern fusion restaurant blending Japanese technique with Latin American ingredients and heat.
 
-**[View the live page]((https://restaurant1sample.netlify.app/))**
-
+**[View Live Demo](https://restaurant1sample.netlify.app/)**
 ## Overview
 
 Built entirely in vanilla HTML, CSS, and JavaScript — no frameworks, no build step, no dependencies beyond Google Fonts. Everything (styles, markup, and scripts) lives in a single `index.html` file.
