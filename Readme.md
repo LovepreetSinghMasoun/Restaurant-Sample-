@@ -2,7 +2,7 @@
 
 A single-page, client-style restaurant website built as a portfolio piece. Concept: a modern fusion restaurant blending Japanese technique with Latin American ingredients and heat.
 
-**[View the live page](index.html)**
+**[View the live page]((https://restaurant1sample.netlify.app/))**
 
 ## Overview
 
